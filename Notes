@@ -1,0 +1,182 @@
+//express allows you to create a server
+const express = require("express")
+const app = express()
+require("./db/DB_CONNECTION")
+
+//middleware that allows to pass json
+app.use(express.json())
+
+const {v4} = require("uuid")
+
+require("dotenv").config()
+
+const port = process.env.PORT
+
+app.listen(port, ()=>console.log("App is listening on", port))
+
+
+app.get("/", (req,res)=>{
+    res.send("Welcome to my api")
+})
+
+let tasks = [{id:1, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:2, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:3, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:4, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:5, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:6, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:7, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:8, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:9, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:10, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:11, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:12, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:13, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:14, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:15, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:16, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:17, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:18, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:19, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:20, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:21, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:22, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:23, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:24, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:25, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:26, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:27, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:28, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:29, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:30, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:31, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:32, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:33, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:34, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:35, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:36, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:37, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:38, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:39, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:40, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:41, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:42, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:43, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:44, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:45, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:46, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:47, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:48, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:49, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:50, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:51, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:52, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:53, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:54, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:55, title:"Learn Nodejs", author:"Eben", dateCreated: new Date(), isComplete:false},
+{id:56, title:"Learn React", author:"Eben",dateCreated: new Date(), isComplete:false},
+{id:57, title:"Learn Mern", author:"Eben",dateCreated: new Date(), isComplete:false}]
+
+let users = [{firstName:"Caroline", lastName:"Hunson", userName:"caro123", pWord:""},
+{firstName:"Raphael", lastName:"Samson", userName:"rasam", pWord:""},
+{firstName:"Joseph", lastName:"Flich", userName:"joflich", pWord:""}]
+
+
+
+app.get("/tasks", (req,res)=>{
+    let taskQuery = req.query
+    let page = parseInt(taskQuery.page)
+    let numberToGet = parseInt(taskQuery.numberToGet)
+    
+    let startIndex = (page - 1) * numberToGet
+    let endIndex = page * numberToGet
+    let result = tasks.slice(startIndex,endIndex)
+    let nextPage, prevPage
+    let currentPage = page
+    if(endIndex < tasks.length){
+
+        nextPage = page+1
+    }
+    if(startIndex > 0){
+        prevPage = page-1
+    }
+
+    res.send({data:result, currentPage, nextPage, prevPage, message:"success"})
+})
+
+app.get("/tasks/:id", (req,res)=>{
+    
+    try {
+        let id = req.params.id
+    let result = tasks.find((task)=> task.id==id)
+    if(!result){
+        return res.status(404).send("record not found")
+    }
+    res.send(result)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
+app.post("/addTask",(req,res)=>{
+    let newTask = {...req.body,id:v4(),isComplete:false}
+    tasks.push(newTask)
+    //tasks = [...tasks,newTask]
+    return res.send({data: tasks, message: "New task created"})
+})
+
+app.put("/updateTaskById/:id",(req,res)=>{
+    let taskId = req.params.id
+    let task = tasks.find((task)=>task.id==taskId)
+    if(task){
+        let updatedTask = {...task,...req.body}
+        res.send({data:updatedTask, message:"task updated"})
+    }
+    else{
+        res.status(400).send("Task not found")
+    }
+})
+
+app.get("/users",(req,res)=>{
+    res.send({data:users, message:"success"})
+})
+
+app.get("/user/:id",(req,res)=>{
+    try {
+        let userId = req.params.id
+        let result = users.find((user)=>userId==id)
+        if(result){
+            res.status(201).send({ message:"Success"})
+        }else{
+            res.status(400).send("User not found")
+        }
+    } catch (error) {
+        res.send(error)
+    } 
+})
+
+app.post("/addUser",(req,res)=>{
+
+    try {
+        let newUser = {...req.body}
+        users = [...users,newUser]
+        res.status(201).send("New user created")
+    } catch (error) {
+        res.send("Creating user failed")
+    }
+
+})
+
+app.put("/updateUser/:id",(req,res)=>{
+    let userId = req.params.id
+    let result = users.find((user)=>userId==id)
+    if(result){
+        let updatedUser = {...user,...req.body}
+        res.status(201).send({data:updatedUser,message:"User updated"})
+    }else{
+        res.send("User not found")
+    }
+})
+
+//you can filter for an array of records 
+// tasks.filter((task)=> task.id==id)
